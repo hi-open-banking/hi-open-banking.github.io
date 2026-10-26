@@ -1,0 +1,132 @@
+---
+// 全站顶部公告：覆盖 Starlight Banner，始终显示，可关闭并记住状态。
+---
+<div class="ob-announcement" id="ob-announcement" data-pagefind-ignore>
+  <div class="ob-announcement__container">
+    <div class="ob-announcement__inner" role="status">
+      <span class="ob-announcement__badge">
+        <span class="ob-announcement__dot" aria-hidden="true"></span>
+        建设中
+      </span>
+      <p class="ob-announcement__text">
+        本站正在持续完善，沙箱环境即将上线（<span class="ob-announcement__en" lang="en">Sandbox coming soon</span>）。
+      </p>
+      <button
+        type="button"
+        class="ob-announcement__close"
+        data-announcement-close
+        aria-label="关闭公告"
+        title="关闭公告"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const el = document.getElementById('ob-announcement');
+    if (!el) return;
+    const key = 'ob-announcement-dismissed-v1';
+    try {
+      if (localStorage.getItem(key) === '1') el.hidden = true;
+    } catch {}
+    el.querySelector('[data-announcement-close]')?.addEventListener('click', () => {
+      el.hidden = true;
+      try {
+        localStorage.setItem(key, '1');
+      } catch {}
+    });
+  })();
+</script>
+
+<style>
+  .ob-announcement {
+    padding: 1rem var(--sl-content-pad-x) 0;
+  }
+
+  .ob-announcement[hidden] {
+    display: none;
+  }
+
+  .ob-announcement__container {
+    max-width: var(--sl-content-width);
+    margin-inline: var(--sl-content-margin-inline, auto);
+  }
+
+  .ob-announcement__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--ob-border, #e5e7eb);
+    border-radius: var(--ob-radius, 6px);
+    background-color: #f0f6ff;
+    color: var(--ob-text, #1a1a1a);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .ob-announcement__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    color: var(--ob-accent, #0055cc);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .ob-announcement__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  .ob-announcement__text {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ob-announcement__en {
+    color: var(--sl-color-gray-3, #6b7280);
+    font-size: 13px;
+  }
+
+  .ob-announcement__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--ob-radius, 6px);
+    background: transparent;
+    color: var(--sl-color-gray-3, #6b7280);
+    cursor: pointer;
+  }
+
+  .ob-announcement__close:hover,
+  .ob-announcement__close:focus-visible {
+    background-color: rgba(0, 85, 204, 0.08);
+    color: var(--ob-accent, #0055cc);
+  }
+
+  @media (max-width: 30rem) {
+    .ob-announcement__inner {
+      align-items: flex-start;
+    }
+
+    .ob-announcement__badge,
+    .ob-announcement__close {
+      margin-top: 0.1rem;
+    }
+  }
+</style>

@@ -18,6 +18,7 @@ export default defineConfig({
       customCss: ['./src/styles/theme.css', './src/styles/content.css'],
       // 站点固定为浅色设计，隐藏主题切换器
       components: {
+        Banner: './src/components/Banner.astro',
         ThemeProvider: './src/components/ThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
       },
