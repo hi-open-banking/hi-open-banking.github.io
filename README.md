@@ -81,6 +81,12 @@ GH_CONFIG_DIR="$PWD/.gh-config" gh auth status
 
 仓库级 Git 身份已在 `.git/config` 中设置为 `hi-open-banking` / `hi-open-banking@users.noreply.github.com`。
 
+仓库还配置了本地 credential helper，`git push` / `git fetch` 会自动使用 `.gh-config/` 中的 hi-open-banking 凭据，不会落到全局 Git 账号：
+
+```bash
+git config --local credential.helper
+```
+
 ### 首次建仓
 
 ```bash
