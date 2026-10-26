@@ -1,0 +1,6 @@
+---
+// 站点固定为浅色主题：在首屏渲染前锁定 data-theme，避免系统深色偏好影响组件配色。
+---
+<script is:inline>
+  document.documentElement.dataset.theme = 'light';
+</script>

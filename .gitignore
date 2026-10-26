@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# 本机的 GitHub 独立登录配置（hi-open-banking），绝不进仓库
+.gh-config/
+.envrc
+.gitconfig
+.gh-credential-helper
