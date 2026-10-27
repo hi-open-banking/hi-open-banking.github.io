@@ -1,22 +1,34 @@
 ---
 // 全站顶部公告：覆盖 Starlight Banner，始终显示，可关闭并记住状态。
+// 文案跟随当前站点语言。
+const lang = Astro.locals.starlightRoute?.lang ?? 'en';
+const isZh = lang.startsWith('zh');
+const t = isZh
+  ? {
+      badge: '建设中',
+      text: '本站正在持续完善，沙箱环境即将上线。',
+      close: '关闭公告',
+    }
+  : {
+      badge: 'IN PROGRESS',
+      text: 'This site is under active development. The sandbox is coming soon.',
+      close: 'Dismiss announcement',
+    };
 ---
 <div class="ob-announcement" id="ob-announcement" data-pagefind-ignore>
   <div class="ob-announcement__container">
     <div class="ob-announcement__inner" role="status">
       <span class="ob-announcement__badge">
         <span class="ob-announcement__dot" aria-hidden="true"></span>
-        建设中
+        {t.badge}
       </span>
-      <p class="ob-announcement__text">
-        本站正在持续完善，沙箱环境即将上线（<span class="ob-announcement__en" lang="en">Sandbox coming soon</span>）。
-      </p>
+      <p class="ob-announcement__text">{t.text}</p>
       <button
         type="button"
         class="ob-announcement__close"
         data-announcement-close
-        aria-label="关闭公告"
-        title="关闭公告"
+        aria-label={t.close}
+        title={t.close}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
@@ -91,11 +103,6 @@
     margin: 0;
     flex: 1;
     min-width: 0;
-  }
-
-  .ob-announcement__en {
-    color: var(--sl-color-gray-3, #6b7280);
-    font-size: 13px;
   }
 
   .ob-announcement__close {

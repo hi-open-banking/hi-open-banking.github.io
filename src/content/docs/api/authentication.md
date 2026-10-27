@@ -1,45 +1,45 @@
 ---
-title: 认证接口
-description: 授权、令牌与撤销端点。
+title: Authentication API
+description: Authorization, token, and revocation endpoints.
 ---
 
-## 授权端点
+## Authorization endpoint
 
 ```http
 GET /oauth/authorize
 ```
 
-### 查询参数
+### Query parameters
 
-| 参数 | 必填 | 说明 |
+| Parameter | Required | Description |
 | --- | --- | --- |
-| `response_type` | 是 | 固定为 `code` |
-| `client_id` | 是 | 应用标识 |
-| `redirect_uri` | 是 | 必须与注册值完全一致 |
-| `scope` | 是 | 空格分隔的权限列表 |
-| `state` | 是 | 防 CSRF 的随机字符串 |
-| `code_challenge` | 公共客户端必填 | PKCE 挑战值 |
-| `code_challenge_method` | 公共客户端必填 | 固定为 `S256` |
+| `response_type` | Yes | Must be `code` |
+| `client_id` | Yes | Application identifier |
+| `redirect_uri` | Yes | Must exactly match the registered value |
+| `scope` | Yes | Space-separated list of permissions |
+| `state` | Yes | Random string to prevent CSRF |
+| `code_challenge` | Required for public clients | PKCE challenge |
+| `code_challenge_method` | Required for public clients | Must be `S256` |
 
-## 令牌端点
+## Token endpoint
 
 ```http
 POST /oauth/token
 Content-Type: application/x-www-form-urlencoded
 ```
 
-### 请求参数
+### Request parameters
 
-| 参数 | 说明 |
+| Parameter | Description |
 | --- | --- |
-| `grant_type` | `authorization_code` 或 `refresh_token` |
-| `code` | 授权码（`authorization_code` 时必填） |
-| `refresh_token` | 刷新令牌（`refresh_token` 时必填） |
-| `client_id` | 应用标识 |
-| `client_secret` | 机密客户端必填 |
-| `code_verifier` | PKCE 校验值 |
+| `grant_type` | `authorization_code` or `refresh_token` |
+| `code` | Authorization code (required with `authorization_code`) |
+| `refresh_token` | Refresh token (required with `refresh_token`) |
+| `client_id` | Application identifier |
+| `client_secret` | Required for confidential clients |
+| `code_verifier` | PKCE verifier |
 
-### 响应
+### Response
 
 ```json
 {
@@ -51,10 +51,10 @@ Content-Type: application/x-www-form-urlencoded
 }
 ```
 
-## 撤销端点
+## Revocation endpoint
 
 ```http
 POST /oauth/revoke
 ```
 
-撤销成功后返回 `200`，重复撤销同样返回 `200`。
+A successful revocation returns `200`; revoking the same token again also returns `200`.

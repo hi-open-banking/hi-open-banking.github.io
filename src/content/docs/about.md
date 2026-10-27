@@ -1,20 +1,20 @@
 ---
-title: 关于本站
-description: 站点定位、内容维护与反馈方式。
+title: About this site
+description: Site purpose, content maintenance, and how to give feedback.
 ---
 
-本站是开放银行相关标准、接入指南与 API 参考的中文文档站，面向需要接入开放银行能力的开发者与机构。
+This site is the documentation hub for Open Banking standards, integration guides, and the API reference. It serves developers and institutions that need to integrate Open Banking capabilities.
 
-## 内容范围
+## Scope
 
-- 开放银行基础概念与术语
-- 授权、账户、支付等核心流程
-- 接口约定、错误码与版本策略
+- Open Banking fundamentals and terminology
+- Core flows for authorization, accounts, and payments
+- API conventions, error codes, and versioning policy
 
-## 维护方式
+## Maintenance
 
-文档与站点代码一同维护。发现错误或有补充建议，欢迎通过仓库 Issue 反馈；涉及接口行为的疑问，请附带 `request_id` 与时间范围。
+The documentation is maintained alongside the site code. If you find an error or have a suggestion, please open an issue in the repository. For questions about API behavior, include the `request_id` and the time range.
 
-## 技术栈
+## Tech stack
 
-站点使用 [Astro Starlight](https://starlight.astro.build/) 构建，输出纯静态文件，可部署在任意静态托管服务上。
+The site is built with [Astro Starlight](https://starlight.astro.build/) and outputs static files that can be deployed to any static hosting service.

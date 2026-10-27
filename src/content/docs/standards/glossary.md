@@ -1,21 +1,21 @@
 ---
-title: 术语表
-description: 开放银行常用术语与缩写。
+title: Glossary
+description: Common Open Banking terms and abbreviations.
 ---
 
-| 术语 | 英文 | 说明 |
-| --- | --- | --- |
-| 开放银行 | Open Banking | 在用户授权下，通过 API 向第三方开放银行数据与服务 |
-| 授权码 | authorization code | 授权服务器签发的一次性凭据，用于换取令牌 |
-| 访问令牌 | access token | 调用 API 时携带的凭据 |
-| 刷新令牌 | refresh token | 用于获取新访问令牌的长期凭据 |
-| 授权范围 | scope | 令牌被授予的权限集合 |
-| 幂等键 | idempotency key | 保证重复请求只生效一次的客户端标识 |
-| 记账日 | booking date | 银行将交易记入账户的日期 |
-| 可用余额 | available balance | 扣除冻结金额后的可支配余额 |
+| Term | Description |
+| --- | --- |
+| Open Banking | Opening bank data and services to third parties through APIs under user consent |
+| Authorization code | A single-use credential issued by the authorization server in exchange for a token |
+| Access token | The credential carried when calling APIs |
+| Refresh token | A long-lived credential used to obtain new access tokens |
+| Scope | The set of permissions granted to a token |
+| Idempotency key | A client-generated identifier ensuring a repeated request takes effect only once |
+| Booking date | The date on which a bank records a transaction on an account |
+| Available balance | The spendable balance after deducting held funds |
 
-## 相关概念
+## Related concepts
 
-- **PSD2**：欧盟支付服务修订法案，开放银行监管框架的代表性立法。
-- **TPP**：第三方支付服务提供者，包括账户信息服务与支付发起服务。
-- **Consent**：用户对数据访问或支付发起的授权记录，具有有效期与范围。
+- **PSD2**: the EU Payment Services Directive, a representative regulatory framework for Open Banking.
+- **TPP**: Third-Party Provider, including account information service providers and payment initiation service providers.
+- **Consent**: A record of the user's authorization for data access or payment initiation, with a validity period and scope.

@@ -1,30 +1,30 @@
 ---
-title: 简介
-description: 开放银行平台能做什么，以及本文档的组织方式。
+title: Introduction
+description: What the Open Banking platform does and how this documentation is organized.
 ---
 
-开放银行（Open Banking）通过标准化 API，让经过用户授权的第三方服务安全地访问银行账户信息、发起支付，并在授权范围内获取交易数据。
+Open Banking uses standardized APIs to let third-party services, with the user's consent, securely access bank account information, initiate payments, and retrieve transaction data within the authorized scope.
 
-## 本文档适合谁
+## Who this documentation is for
 
-本文档面向需要接入开放银行能力的开发者、架构师与产品经理。阅读前建议具备以下基础：
+This documentation is for developers, architects, and product managers who need to integrate Open Banking capabilities. The following background is recommended:
 
-- 熟悉 HTTP、JSON 与 REST 风格接口
-- 了解 OAuth 2.0 授权码流程
-- 能够使用 `curl` 或任意 HTTP 客户端调试接口
+- Familiarity with HTTP, JSON, and REST-style APIs
+- Understanding of the OAuth 2.0 authorization code flow
+- Ability to debug APIs with `curl` or any HTTP client
 
-## 文档结构
+## Documentation structure
 
-| 章节 | 内容 |
+| Section | Contents |
 | --- | --- |
-| 开始 | 环境准备与第一个 API 调用 |
-| 指南 | 认证、账户、支付、通知与沙箱 |
-| API 参考 | 端点、参数、响应与错误码 |
-| 规范 | 术语、错误码与版本策略 |
+| Getting started | Environment setup and your first API call |
+| Guides | Authentication, accounts, payments, notifications, and the sandbox |
+| API reference | Endpoints, parameters, responses, and error codes |
+| Standards | Terminology, error codes, and versioning policy |
 
-## 接口约定
+## API conventions
 
-所有接口均使用 HTTPS，请求与响应体为 JSON，时间字段采用 ISO 8601 格式（UTC）。
+All APIs use HTTPS. Request and response bodies are JSON, and time fields use ISO 8601 format (UTC).
 
 ```http
 GET /v1/accounts HTTP/1.1
@@ -33,5 +33,5 @@ Authorization: Bearer <access_token>
 ```
 
 :::note
-文档中的示例域名 `api.openbanking.org.cn` 为演示地址，实际接入地址以沙箱或生产环境下发为准。
+The example domain `api.openbanking.org.cn` is for demonstration. Use the base URL issued for the sandbox or production environment when integrating.
 :::

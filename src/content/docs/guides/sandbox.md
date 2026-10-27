@@ -1,30 +1,30 @@
 ---
-title: 沙箱环境
-description: 沙箱地址、测试账户与模拟场景。
+title: Sandbox
+description: Sandbox URL, test accounts, and simulated scenarios.
 ---
 
-沙箱提供与生产一致的接口行为，但不涉及真实资金。所有测试数据会在每周日凌晨重置。
+The sandbox behaves like production but never moves real funds. All test data is reset every Sunday at midnight.
 
-## 环境地址
+## Environment URLs
 
-| 环境 | 地址 |
+| Environment | URL |
 | --- | --- |
-| 沙箱 | `https://sandbox.api.openbanking.org.cn` |
-| 生产 | `https://api.openbanking.org.cn` |
+| Sandbox | `https://sandbox.api.openbanking.org.cn` |
+| Production | `https://api.openbanking.org.cn` |
 
-## 测试账户
+## Test accounts
 
-沙箱预置了若干账户，可覆盖可用、冻结、关闭等状态：
+The sandbox provides seeded accounts covering available, frozen, and closed states:
 
-| 账户 ID | 状态 | 余额 |
+| Account ID | Status | Balance |
 | --- | --- | --- |
 | `acc_8f2c1d` | ENABLED | 12,800.00 CNY |
 | `acc_3a9b7e` | DISABLED | 0.00 CNY |
 | `acc_6c4d2f` | CLOSED | — |
 
-## 模拟支付结果
+## Simulate payment outcomes
 
-在创建支付指令时附加 `X-Sandbox-Scenario` 头，可触发指定结果：
+Add an `X-Sandbox-Scenario` header when creating a payment instruction to trigger a specific outcome:
 
 ```bash
 curl -X POST https://sandbox.api.openbanking.org.cn/v1/payments \
@@ -35,8 +35,8 @@ curl -X POST https://sandbox.api.openbanking.org.cn/v1/payments \
   -d @payment.json
 ```
 
-可用场景：`payment_accepted`、`payment_rejected`、`payment_pending`。
+Available scenarios: `payment_accepted`, `payment_rejected`, and `payment_pending`.
 
 :::note
-沙箱令牌与生产令牌互不通用。切换环境时请同时替换客户端凭据与 API 地址。
+Sandbox tokens and production tokens are not interchangeable. When switching environments, replace both the client credentials and the API base URL.
 :::

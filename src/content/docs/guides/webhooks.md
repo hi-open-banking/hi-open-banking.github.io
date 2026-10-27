@@ -1,11 +1,11 @@
 ---
-title: Webhook 通知
-description: 接收并校验异步事件通知。
+title: Webhooks
+description: Receive and verify asynchronous event notifications.
 ---
 
-当授权、账户或支付状态发生变化时，平台会向应用配置的回调地址推送事件。
+When the status of an authorization, account, or payment changes, the platform pushes an event to the callback URL configured for your application.
 
-## 事件结构
+## Event structure
 
 ```json
 {
@@ -19,9 +19,9 @@ description: 接收并校验异步事件通知。
 }
 ```
 
-## 校验签名
+## Verify the signature
 
-每个请求都带有 `X-Signature` 头，值为请求体与签名密钥的 HMAC-SHA256。必须先校验再处理。
+Every request includes an `X-Signature` header containing an HMAC-SHA256 of the request body and your signing secret. Verify it before processing.
 
 ```js
 import { createHmac, timingSafeEqual } from 'node:crypto';
@@ -35,12 +35,12 @@ function verify(body, signature, secret) {
 }
 ```
 
-## 重试策略
+## Retry policy
 
-- 未返回 `2xx` 时按指数退避重试，最多 5 次。
-- 处理逻辑必须幂等，以 `event_id` 去重。
-- 回调处理应在 5 秒内返回，耗时任务请异步执行。
+- Non-`2xx` responses are retried with exponential backoff, up to 5 attempts.
+- Handlers must be idempotent and deduplicate by `event_id`.
+- Respond within 5 seconds; run long-running work asynchronously.
 
 :::tip
-建议在本地开发时使用内网穿透工具暴露回调地址，并在沙箱中验证签名与重试逻辑。
+During local development, expose your callback URL with a tunnel tool and verify signature handling and retry logic in the sandbox.
 :::

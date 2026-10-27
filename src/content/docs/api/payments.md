@@ -1,27 +1,27 @@
 ---
-title: 支付接口
-description: 创建、查询与取消支付指令。
+title: Payments API
+description: Create, query, and cancel payment instructions.
 ---
 
-## 创建支付指令
+## Create a payment instruction
 
 ```http
 POST /v1/payments
 Idempotency-Key: <uuid>
 ```
 
-### 请求体
+### Request body
 
-| 字段 | 类型 | 必填 | 说明 |
+| Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `debtor_account_id` | string | 是 | 付款账户 |
-| `creditor.name` | string | 是 | 收款方名称 |
-| `creditor.account_number` | string | 是 | 收款账号 |
-| `amount.currency` | string | 是 | ISO 4217 货币代码 |
-| `amount.value` | string | 是 | 金额字符串，两位小数 |
-| `remittance_information` | string | 否 | 附言，最长 140 字符 |
+| `debtor_account_id` | string | Yes | Payer account |
+| `creditor.name` | string | Yes | Payee name |
+| `creditor.account_number` | string | Yes | Payee account number |
+| `amount.currency` | string | Yes | ISO 4217 currency code |
+| `amount.value` | string | Yes | Amount string with two decimal places |
+| `remittance_information` | string | No | Remittance information, up to 140 characters |
 
-### 响应
+### Response
 
 ```json
 {
@@ -31,16 +31,16 @@ Idempotency-Key: <uuid>
 }
 ```
 
-## 查询支付指令
+## Query a payment instruction
 
 ```http
 GET /v1/payments/{payment_id}
 ```
 
-## 取消支付指令
+## Cancel a payment instruction
 
 ```http
 DELETE /v1/payments/{payment_id}
 ```
 
-仅 `PENDING` 状态可取消。取消成功后状态变为 `CANCELLED`。
+Only instructions in `PENDING` status can be cancelled. On success, the status becomes `CANCELLED`.

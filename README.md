@@ -1,6 +1,6 @@
 # openbanking.org.cn
 
-开放银行开发者文档站，基于 [Astro Starlight](https://starlight.astro.build/) 构建的纯静态站点。
+开放银行开发者文档站（OPEN-BANKING-LABS），基于 [Astro Starlight](https://starlight.astro.build/) 构建的纯静态站点，支持中英双语，默认英文。
 
 ## 环境
 
@@ -26,11 +26,13 @@ npm run check        # Astro / TypeScript 类型检查
 src/
   components/        组件覆盖（固定浅色主题、隐藏主题切换器）
   content.config.ts  docs 与 i18n 内容集合
-  content/docs/      文档内容（Markdown / MDX）
-    getting-started/ 开始
-    guides/          指南
-    api/             API 参考
-    standards/       规范
+  content/docs/      英文文档（默认语言，Markdown / MDX）
+    getting-started/ Getting started
+    guides/          Guides
+    api/             API reference
+    standards/       Standards
+    zh-cn/           中文文档，路由前缀 /zh-cn/
+  content/i18n/      界面文案覆盖（按语言标签命名，如 zh-CN.json）
   styles/
     theme.css        全局配色、字体、侧边栏、右侧目录、圆角
     content.css      文档正文、标题、代码块、提示框、表格
@@ -40,7 +42,15 @@ public/
 
 ## 导航
 
-侧边栏在 `astro.config.mjs` 的 `starlight.sidebar` 中维护，分为「开始 / 指南 / API 参考 / 规范 / 关于」五组。新增页面后，在对应分组中补充 `slug` 即可出现在导航中。
+侧边栏在 `astro.config.mjs` 的 `starlight.sidebar` 中维护，分为 Getting started / Guides / API reference / Standards / About 五组。每个分组和条目通过 `translations` 提供中文标签。新增页面后，在对应分组中补充 `slug`，并在 `src/content/docs/` 与 `src/content/docs/zh-cn/` 下同时添加中英文文件即可。
+
+## 多语言
+
+- 语言配置在 `astro.config.mjs` 的 `locales` 中：`root`（English，默认）与 `zh-cn`（简体中文）。
+- 默认语言内容放在 `src/content/docs/`，中文内容放在 `src/content/docs/zh-cn/`，路径一一对应。
+- 中文页面内的站内链接需带 `/zh-cn/` 前缀。
+- 界面文案默认使用 Starlight 内置翻译，如需覆盖，在 `src/content/i18n/<lang>.json` 中补充，例如 `zh-CN.json`。
+- 顶栏站名统一为 `OPEN-BANKING-LABS`，不随语言变化。
 
 ## 设计规范
 

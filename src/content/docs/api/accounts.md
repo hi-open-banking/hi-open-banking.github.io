@@ -1,23 +1,23 @@
 ---
-title: 账户接口
-description: 账户列表、详情与余额端点。
+title: Accounts API
+description: Account list, detail, and balance endpoints.
 ---
 
-## 获取账户列表
+## List accounts
 
 ```http
 GET /v1/accounts
 ```
 
-### 查询参数
+### Query parameters
 
-| 参数 | 类型 | 说明 |
+| Parameter | Type | Description |
 | --- | --- | --- |
-| `page` | integer | 页码，从 1 开始 |
-| `page_size` | integer | 每页条数，默认 20，最大 100 |
-| `status` | string | 按状态过滤 |
+| `page` | integer | Page number, starting at 1 |
+| `page_size` | integer | Items per page; default 20, maximum 100 |
+| `status` | string | Filter by status |
 
-### 响应
+### Response
 
 ```json
 {
@@ -34,13 +34,13 @@ GET /v1/accounts
 }
 ```
 
-## 获取账户详情
+## Get account details
 
 ```http
 GET /v1/accounts/{account_id}
 ```
 
-## 获取余额
+## Get balances
 
 ```http
 GET /v1/accounts/{account_id}/balances
@@ -56,5 +56,5 @@ GET /v1/accounts/{account_id}/balances
 ```
 
 :::caution
-`available` 与 `booked` 含义不同。可用余额已扣除冻结金额，付款前请以 `available` 为准。
+`available` and `booked` mean different things. Available balance excludes held funds; check `available` before initiating a payment.
 :::

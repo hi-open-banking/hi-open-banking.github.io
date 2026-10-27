@@ -1,26 +1,26 @@
 ---
-title: 认证与授权
-description: OAuth 2.0 授权码流程、PKCE、令牌刷新与撤销。
+title: Authentication & authorization
+description: OAuth 2.0 authorization code flow, PKCE, token refresh, and revocation.
 ---
 
-所有 API 请求都必须携带访问令牌。令牌通过 OAuth 2.0 授权码流程获取，公共客户端必须使用 PKCE。
+Every API request must carry an access token. Tokens are obtained through the OAuth 2.0 authorization code flow, and public clients must use PKCE.
 
-## 授权流程
+## Authorization flow
 
-1. 应用将用户重定向到授权端点，并携带 `client_id`、`redirect_uri`、`scope` 与 `state`。
-2. 用户在银行页面完成身份验证，并确认授权范围。
-3. 银行将授权码回调到 `redirect_uri`。
-4. 应用在服务端用授权码换取访问令牌。
+1. The application redirects the user to the authorization endpoint with `client_id`, `redirect_uri`, `scope`, and `state`.
+2. The user authenticates on the bank's page and confirms the requested scope.
+3. The bank redirects back to `redirect_uri` with an authorization code.
+4. The application exchanges the authorization code for an access token on its server.
 
 ```text
-应用 ──授权请求──▶ 授权服务器 ──登录/授权──▶ 用户
-应用 ◀──授权码──── 授权服务器
-应用 ──换取令牌──▶ 令牌端点 ──▶ access_token + refresh_token
+App ──authorization request──▶ Authorization server ──login/consent──▶ User
+App ◀──authorization code──── Authorization server
+App ──token exchange──▶ Token endpoint ──▶ access_token + refresh_token
 ```
 
-## 刷新令牌
+## Refresh tokens
 
-访问令牌默认有效期为 1 小时。过期后使用 `refresh_token` 换取新令牌，无需再次打扰用户。
+Access tokens are valid for one hour by default. After they expire, use the `refresh_token` to obtain a new token without prompting the user again.
 
 ```bash
 curl -X POST https://api.openbanking.org.cn/oauth/token \
@@ -31,21 +31,21 @@ curl -X POST https://api.openbanking.org.cn/oauth/token \
 ```
 
 :::tip
-刷新令牌是一次性使用的。每次刷新都会返回新的 `refresh_token`，请以最新值为准并持久化。
+Refresh tokens are single-use. Each refresh returns a new `refresh_token`; always persist the latest value.
 :::
 
-## 授权范围
+## Scopes
 
-| scope | 说明 |
+| Scope | Description |
 | --- | --- |
-| `accounts` | 读取账户基本信息 |
-| `balances` | 读取账户余额 |
-| `transactions` | 读取交易明细 |
-| `payments` | 发起支付指令 |
+| `accounts` | Read basic account information |
+| `balances` | Read account balances |
+| `transactions` | Read transaction details |
+| `payments` | Initiate payment instructions |
 
-## 撤销授权
+## Revoke authorization
 
-用户可以在银行应用中随时撤销授权。应用侧应监听撤销事件，并删除本地保存的令牌。
+Users can revoke authorization at any time from their banking app. Your application should listen for revocation events and delete locally stored tokens.
 
 ```bash
 curl -X POST https://api.openbanking.org.cn/oauth/revoke \

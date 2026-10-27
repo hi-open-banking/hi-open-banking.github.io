@@ -1,28 +1,28 @@
 ---
-title: API 概览
-description: 基础地址、请求约定、分页、幂等与错误处理。
+title: API overview
+description: Base URL, request conventions, pagination, idempotency, and error handling.
 ---
 
-所有接口遵循统一的请求与响应约定。
+All APIs follow the same request and response conventions.
 
-## 基础地址
+## Base URL
 
 ```text
 https://api.openbanking.org.cn/v1
 ```
 
-## 请求头
+## Request headers
 
-| 请求头 | 必填 | 说明 |
+| Header | Required | Description |
 | --- | --- | --- |
-| `Authorization` | 是 | `Bearer <access_token>` |
-| `Content-Type` | 是 | `application/json`（表单接口除外） |
-| `X-Request-Id` | 否 | 调用方生成的请求标识，便于链路追踪 |
-| `Idempotency-Key` | 支付类必填 | 幂等键，建议使用 UUID v4 |
+| `Authorization` | Yes | `Bearer <access_token>` |
+| `Content-Type` | Yes | `application/json` (except form endpoints) |
+| `X-Request-Id` | No | Caller-generated request identifier for tracing |
+| `Idempotency-Key` | Required for payments | Idempotency key; UUID v4 recommended |
 
-## 分页
+## Pagination
 
-列表接口使用 `page` 与 `page_size`，`page_size` 最大 100。
+List endpoints use `page` and `page_size`; `page_size` is capped at 100.
 
 ```json
 {
@@ -31,24 +31,24 @@ https://api.openbanking.org.cn/v1
 }
 ```
 
-## 错误响应
+## Error responses
 
-非 `2xx` 响应统一返回结构化错误：
+Non-`2xx` responses return a structured error:
 
 ```json
 {
   "error": {
     "code": "RESOURCE_NOT_FOUND",
-    "message": "账户不存在",
+    "message": "Account not found",
     "request_id": "req_01J9Z3K4"
   }
 }
 ```
 
 :::note
-请以 `error.code` 做分支判断，`message` 仅用于展示，可能随语言或版本调整。
+Branch on `error.code`. The `message` field is for display only and may change with language or version.
 :::
 
-## 版本策略
+## Versioning
 
-版本号位于路径中（`/v1`）。不兼容变更会发布新版本，旧版本至少维护 12 个月。
+The version is part of the path (`/v1`). Incompatible changes are released as a new version, and older versions are supported for at least 12 months.

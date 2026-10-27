@@ -1,25 +1,25 @@
 ---
-title: 快速开始
-description: 在沙箱环境中完成第一次授权与 API 调用。
+title: Quickstart
+description: Complete your first authorization and API call in the sandbox.
 ---
 
-本页用大约十分钟带你完成一次完整的调用：注册应用、获取令牌、读取账户列表。
+This page walks you through a complete integration in about ten minutes: register an application, obtain a token, and read your account list.
 
-## 1. 准备应用
+## 1. Prepare your application
 
-在开发者门户创建应用后，你会得到一组凭据：
+After creating an application in the developer portal, you receive a set of credentials:
 
-- `client_id`：应用标识，可公开
-- `client_secret`：应用密钥，仅保存在服务端
-- `redirect_uri`：授权完成后的回调地址
+- `client_id`: the application identifier, which may be public
+- `client_secret`: the application secret, stored only on your server
+- `redirect_uri`: the callback address after authorization completes
 
 :::caution
-`client_secret` 不得出现在浏览器、移动端安装包或公开仓库中。若怀疑泄露，请立即在门户重置。
+`client_secret` must never appear in browsers, mobile app bundles, or public repositories. If you suspect a leak, reset it in the portal immediately.
 :::
 
-## 2. 获取访问令牌
+## 2. Obtain an access token
 
-使用授权码模式换取令牌：
+Exchange the authorization code for a token:
 
 ```bash
 curl -X POST https://api.openbanking.org.cn/oauth/token \
@@ -31,7 +31,7 @@ curl -X POST https://api.openbanking.org.cn/oauth/token \
   -d "redirect_uri=$REDIRECT_URI"
 ```
 
-成功响应示例：
+Example success response:
 
 ```json
 {
@@ -43,14 +43,14 @@ curl -X POST https://api.openbanking.org.cn/oauth/token \
 }
 ```
 
-## 3. 读取账户
+## 3. Read accounts
 
 ```bash
 curl https://api.openbanking.org.cn/v1/accounts \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
-## 下一步
+## Next steps
 
-- 阅读[认证与授权](/guides/authentication/)，了解令牌刷新与撤销。
-- 阅读[账户信息](/guides/account-information/)，了解分页与增量同步。
+- Read [Authentication & authorization](/guides/authentication/) to learn about token refresh and revocation.
+- Read [Account information](/guides/account-information/) to learn about pagination and incremental sync.

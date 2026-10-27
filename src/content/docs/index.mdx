@@ -1,39 +1,39 @@
 ---
-title: 开放银行开发者文档
-description: 开放银行（Open Banking）开发者文档：认证授权、账户信息、支付发起与 API 参考。
+title: Open Banking Developer Documentation
+description: Open Banking developer documentation for authorization, account information, payment initiation, and the API reference.
 template: splash
 hero:
-  tagline: 用一套标准 API，安全地连接银行账户、交易与支付。
+  tagline: Connect to bank accounts, transactions, and payments securely through one standard API.
   actions:
-    - text: 快速开始
+    - text: Quickstart
       link: /getting-started/quickstart/
       icon: right-arrow
-    - text: 浏览 API
+    - text: Browse the API
       link: /api/overview/
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## 从这里开始
+## Start here
 
 <CardGrid>
-  <Card title="认证与授权" icon="padlock">
-    了解 OAuth 2.0 授权码流程、PKCE 与令牌刷新，接入用户授权。
+  <Card title="Authentication & authorization" icon="padlock">
+    Learn the OAuth 2.0 authorization code flow, PKCE, and token refresh to obtain user consent.
   </Card>
-  <Card title="账户信息" icon="open-book">
-    读取账户余额、交易明细与对账单，构建账务类应用。
+  <Card title="Account information" icon="open-book">
+    Read account balances, transaction details, and statements to build accounting applications.
   </Card>
-  <Card title="支付发起" icon="rocket">
-    创建付款指令、跟踪支付状态并处理回调通知。
+  <Card title="Payment initiation" icon="rocket">
+    Create payment instructions, track payment status, and handle callback notifications.
   </Card>
-  <Card title="API 参考" icon="setting">
-    查看端点、请求参数、响应结构与错误码定义。
+  <Card title="API reference" icon="setting">
+    Look up endpoints, request parameters, response structures, and error codes.
   </Card>
 </CardGrid>
 
-## 设计原则
+## Design principles
 
-- **一致**：所有接口共用同一套认证、分页、错误与幂等约定。
-- **安全**：默认最小权限，敏感操作要求用户显式授权。
-- **可追溯**：每个请求都带唯一标识，便于对账与排查。
+- **Consistent**: every API shares the same conventions for authentication, pagination, errors, and idempotency.
+- **Secure**: least privilege by default; sensitive operations require explicit user consent.
+- **Traceable**: every request carries a unique identifier for reconciliation and troubleshooting.

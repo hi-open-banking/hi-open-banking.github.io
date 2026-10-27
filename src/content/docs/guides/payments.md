@@ -1,11 +1,11 @@
 ---
-title: 支付发起
-description: 创建付款指令、跟踪状态并保证幂等。
+title: Payment initiation
+description: Create payment instructions, track status, and guarantee idempotency.
 ---
 
-支付接口采用「创建指令 → 用户确认 → 执行」三段式流程。创建请求必须携带 `Idempotency-Key`。
+The Payments API follows a three-stage flow: create an instruction → user confirmation → execution. Create requests must include an `Idempotency-Key`.
 
-## 创建付款指令
+## Create a payment instruction
 
 ```bash
 curl -X POST https://api.openbanking.org.cn/v1/payments \
@@ -15,31 +15,31 @@ curl -X POST https://api.openbanking.org.cn/v1/payments \
   -d '{
     "debtor_account_id": "acc_8f2c1d",
     "creditor": {
-      "name": "示例收款方",
+      "name": "Example Payee",
       "account_number": "6222020202020202"
     },
     "amount": { "currency": "CNY", "value": "128.00" },
-    "remittance_information": "订单 20261026001"
+    "remittance_information": "Order 20261026001"
   }'
 ```
 
-## 指令状态
+## Instruction status
 
-| 状态 | 说明 |
+| Status | Description |
 | --- | --- |
-| `PENDING` | 已创建，等待用户确认 |
-| `ACCEPTED` | 银行已受理 |
-| `SETTLED` | 已完成结算 |
-| `REJECTED` | 被拒绝，需查看原因码 |
+| `PENDING` | Created, awaiting user confirmation |
+| `ACCEPTED` | Accepted by the bank |
+| `SETTLED` | Settlement completed |
+| `REJECTED` | Rejected; check the reason code |
 
 :::caution
-处于 `PENDING` 或 `ACCEPTED` 的指令不可重复创建。重试时必须复用同一个 `Idempotency-Key`，否则可能产生重复付款。
+Instructions in `PENDING` or `ACCEPTED` status must not be created again. Reuse the same `Idempotency-Key` when retrying, or you may create duplicate payments.
 :::
 
-## 查询状态
+## Query status
 
 ```http
 GET /v1/payments/{payment_id}
 ```
 
-建议使用 Webhook 接收状态变更，并以轮询作为兜底。
+Use webhooks to receive status changes, with polling as a fallback.

@@ -9,11 +9,14 @@ export default defineConfig({
   site: SITE_URL,
   integrations: [
     starlight({
-      title: '开放银行',
-      description: '开放银行开发者文档：认证授权、账户信息、支付发起与 API 参考。',
+      title: 'OPEN-BANKING-LABS',
+      description:
+        'Open Banking developer documentation: authentication, account information, payment initiation, and API reference.',
+      // 默认英文，中文位于 /zh-cn/
       defaultLocale: 'root',
       locales: {
-        root: { label: '简体中文', lang: 'zh-CN' },
+        root: { label: 'English', lang: 'en' },
+        'zh-cn': { label: '简体中文', lang: 'zh-CN' },
       },
       customCss: ['./src/styles/theme.css', './src/styles/content.css'],
       // 站点固定为浅色设计，隐藏主题切换器
@@ -24,43 +27,114 @@ export default defineConfig({
       },
       sidebar: [
         {
-          label: '开始',
+          label: 'Getting started',
+          translations: { 'zh-CN': '开始' },
           items: [
-            { label: '简介', slug: 'getting-started/introduction' },
-            { label: '快速开始', slug: 'getting-started/quickstart' },
+            {
+              label: 'Introduction',
+              translations: { 'zh-CN': '简介' },
+              slug: 'getting-started/introduction',
+            },
+            {
+              label: 'Quickstart',
+              translations: { 'zh-CN': '快速开始' },
+              slug: 'getting-started/quickstart',
+            },
           ],
         },
         {
-          label: '指南',
+          label: 'Guides',
+          translations: { 'zh-CN': '指南' },
           items: [
-            { label: '认证与授权', slug: 'guides/authentication' },
-            { label: '账户信息', slug: 'guides/account-information' },
-            { label: '支付发起', slug: 'guides/payments' },
-            { label: 'Webhook 通知', slug: 'guides/webhooks' },
-            { label: '沙箱环境', slug: 'guides/sandbox' },
+            {
+              label: 'Authentication & authorization',
+              translations: { 'zh-CN': '认证与授权' },
+              slug: 'guides/authentication',
+            },
+            {
+              label: 'Account information',
+              translations: { 'zh-CN': '账户信息' },
+              slug: 'guides/account-information',
+            },
+            {
+              label: 'Payment initiation',
+              translations: { 'zh-CN': '支付发起' },
+              slug: 'guides/payments',
+            },
+            {
+              label: 'Webhooks',
+              translations: { 'zh-CN': 'Webhook 通知' },
+              slug: 'guides/webhooks',
+            },
+            {
+              label: 'Sandbox',
+              translations: { 'zh-CN': '沙箱环境' },
+              slug: 'guides/sandbox',
+            },
           ],
         },
         {
-          label: 'API 参考',
+          label: 'API reference',
+          translations: { 'zh-CN': 'API 参考' },
           items: [
-            { label: 'API 概览', slug: 'api/overview' },
-            { label: '认证接口', slug: 'api/authentication' },
-            { label: '账户接口', slug: 'api/accounts' },
-            { label: '交易接口', slug: 'api/transactions' },
-            { label: '支付接口', slug: 'api/payments' },
+            {
+              label: 'API overview',
+              translations: { 'zh-CN': 'API 概览' },
+              slug: 'api/overview',
+            },
+            {
+              label: 'Authentication API',
+              translations: { 'zh-CN': '认证接口' },
+              slug: 'api/authentication',
+            },
+            {
+              label: 'Accounts API',
+              translations: { 'zh-CN': '账户接口' },
+              slug: 'api/accounts',
+            },
+            {
+              label: 'Transactions API',
+              translations: { 'zh-CN': '交易接口' },
+              slug: 'api/transactions',
+            },
+            {
+              label: 'Payments API',
+              translations: { 'zh-CN': '支付接口' },
+              slug: 'api/payments',
+            },
           ],
         },
         {
-          label: '规范',
+          label: 'Standards',
+          translations: { 'zh-CN': '规范' },
           items: [
-            { label: '术语表', slug: 'standards/glossary' },
-            { label: '错误码', slug: 'standards/errors' },
-            { label: '版本与变更', slug: 'standards/versioning' },
+            {
+              label: 'Glossary',
+              translations: { 'zh-CN': '术语表' },
+              slug: 'standards/glossary',
+            },
+            {
+              label: 'Error codes',
+              translations: { 'zh-CN': '错误码' },
+              slug: 'standards/errors',
+            },
+            {
+              label: 'Versioning & changes',
+              translations: { 'zh-CN': '版本与变更' },
+              slug: 'standards/versioning',
+            },
           ],
         },
         {
-          label: '关于',
-          items: [{ label: '关于本站', slug: 'about' }],
+          label: 'About',
+          translations: { 'zh-CN': '关于' },
+          items: [
+            {
+              label: 'About this site',
+              translations: { 'zh-CN': '关于本站' },
+              slug: 'about',
+            },
+          ],
         },
       ],
       expressiveCode: {
