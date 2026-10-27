@@ -1,0 +1,76 @@
+---
+// 覆盖 Starlight 默认 Head：追加站点图标、PWA 清单与社交分享卡片元数据。
+// 分享卡片图按语言区分：英文 1280×640，中文 1080×640（适合微信）。
+const { head, lang, entry } = Astro.locals.starlightRoute;
+
+const isZh = lang.startsWith('zh');
+const site = Astro.site ?? new URL(Astro.url.origin);
+
+const getMeta = (key: string) => {
+  const content = head.find(
+    ({ tag, attrs }) =>
+      tag === 'meta' && (attrs?.name === key || attrs?.property === key)
+  )?.attrs?.content;
+  return typeof content === 'string' ? content : undefined;
+};
+
+const pageTitle = getMeta('og:title') ?? entry.data.title;
+const pageDescription = getMeta('description') ?? entry.data.description ?? '';
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isHome = pathname === '/' || pathname === '/zh-cn';
+
+const shareImagePath = isZh ? '/og/og-zh-cn.png' : '/og/og-en.png';
+const shareImage = new URL(shareImagePath, site).href;
+const shareImageAlt = isZh
+  ? 'OPEN-BANKING-LABS · 开放金融 · 数字科技'
+  : 'OPEN-BANKING-LABS — Open Banking developer documentation';
+const shareImageWidth = isZh ? 1080 : 1280;
+const shareImageHeight = 640;
+
+// 移除默认值，改用更适合分享卡片的值（og:type、og:locale、twitter:card）。
+const defaultHead = head.filter(
+  ({ tag, attrs }) =>
+    !(
+      tag === 'meta' &&
+      (attrs?.property === 'og:type' ||
+        attrs?.property === 'og:locale' ||
+        attrs?.name === 'twitter:card')
+    )
+);
+---
+
+{defaultHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+
+<!-- 站点图标 -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#0A2540" />
+<meta name="application-name" content="OPEN-BANKING-LABS" />
+<meta name="apple-mobile-web-app-title" content="OPEN-BANKING-LABS" />
+
+<!-- Open Graph：X / Facebook / 微信等分享卡片 -->
+<meta property="og:type" content={isHome ? 'website' : 'article'} />
+<meta property="og:locale" content={isZh ? 'zh_CN' : 'en_US'} />
+<meta property="og:image" content={shareImage} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content={String(shareImageWidth)} />
+<meta property="og:image:height" content={String(shareImageHeight)} />
+<meta property="og:image:alt" content={shareImageAlt} />
+<meta property="og:image:secure_url" content={shareImage} />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={shareImage} />
+<meta name="twitter:image:alt" content={shareImageAlt} />
+
+<!-- 微信 / 旧版抓取器：部分客户端只读取 link[rel=image_src] 与 itemprop=image -->
+<link rel="image_src" href={shareImage} />
+<meta itemprop="image" content={shareImage} />
+<meta itemprop="name" content={pageTitle} />
+<meta itemprop="description" content={pageDescription} />

@@ -24,7 +24,8 @@ npm run check        # Astro / TypeScript 类型检查
 
 ```
 src/
-  components/        组件覆盖（固定浅色主题、隐藏主题切换器）
+  assets/            品牌图片（头像 avatar.svg、顶栏标识 logo-mark.svg）
+  components/        组件覆盖（固定浅色主题、隐藏主题切换器、Head 元数据）
   content.config.ts  docs 与 i18n 内容集合
   content/docs/      英文文档（默认语言，Markdown / MDX）
     getting-started/ Getting started
@@ -37,8 +38,18 @@ src/
     theme.css        全局配色、字体、侧边栏、右侧目录、圆角
     content.css      文档正文、标题、代码块、提示框、表格
 public/
-  favicon.svg
+  favicon.ico / favicon.svg / favicon-*.png / apple-touch-icon.png
+  icon-192.png / icon-512.png / site.webmanifest
+  og/                分享卡片：og-en.png（1280×640）、og-zh-cn.png（1080×640）
+  brand/             头像：avatar-1024.svg、avatar-500.png、avatar-640.png
 ```
+
+## 图标与分享卡片
+
+- 页面图标通过 `src/components/Head.astro` 覆盖 Starlight 的 `Head` 组件统一输出：`favicon.ico`、多尺寸 PNG、`apple-touch-icon`、`site.webmanifest` 与 `theme-color`。
+- 顶栏品牌标识使用 `src/assets/logo-mark.svg`（在 `astro.config.mjs` 的 `logo` 中配置），首页 hero 右侧使用 `src/assets/avatar.svg`。
+- 分享卡片按语言切换：英文页使用 `/og/og-en.png`（1280×640），中文页使用 `/og/og-zh-cn.png`（1080×640）。`Head.astro` 输出 Open Graph、Twitter/X 与微信抓取所需的 `og:image`、`twitter:image`、`link[rel=image_src]`、`itemprop=image` 等标签，图片 URL 由 `site` 自动补全为绝对地址。
+- 头像与卡片原图同时保留在 `public/brand/`、`public/og/`，便于在 GitHub、X、微信等平台复用。
 
 ## 导航
 
