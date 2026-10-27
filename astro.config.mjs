@@ -12,6 +12,12 @@ export default defineConfig({
       title: 'OPEN-BANKING-LABS',
       description:
         'Open Banking developer documentation: authentication, account information, payment initiation, and API reference.',
+      // 站点图标与顶栏品牌标识
+      favicon: '/favicon.svg',
+      logo: {
+        src: './src/assets/logo-mark.svg',
+        alt: 'OPEN-BANKING-LABS',
+      },
       // 默认英文，中文位于 /zh-cn/
       defaultLocale: 'root',
       locales: {
@@ -21,6 +27,7 @@ export default defineConfig({
       customCss: ['./src/styles/theme.css', './src/styles/content.css'],
       // 站点固定为浅色设计，隐藏主题切换器
       components: {
+        Head: './src/components/Head.astro',
         Banner: './src/components/Banner.astro',
         ThemeProvider: './src/components/ThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',

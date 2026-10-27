@@ -1,5 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0055CC"/>
-  <path d="M8 23V12l8-5 8 5v11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 23v-6M16 23v-6M20 23v-6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#0A2540"/>
+
+  <!-- 简化 O -->
+  <circle cx="32" cy="23" r="11"
+          fill="none" stroke="#FFFFFF" stroke-width="6"/>
+
+  <!-- 下划线 -->
+  <rect x="17" y="40" width="30" height="4" rx="2" fill="#FFFFFF"/>
+
+  <!-- 简化 //：整体居中，左右对称，round cap 不越界 -->
+  <path d="M25 55 L30 47 M35 55 L40 47"
+        stroke="#00A3FF" stroke-width="5"
+        stroke-linecap="round"/>
 </svg>
