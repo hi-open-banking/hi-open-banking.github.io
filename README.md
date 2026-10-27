@@ -63,47 +63,40 @@ public/
 
 站点固定为浅色主题：`ThemeProvider` 在首屏渲染前锁定 `data-theme="light"`，主题切换器不渲染。
 
-## GitHub Pages 部署
+## Cloudflare Workers 部署
 
-- 仓库：`hi-open-banking/hi-open-banking.github.io`（public）
-- 默认地址：`https://hi-open-banking.github.io`
-- 工作流：`.github/workflows/deploy.yml`，推送到 `main` 后自动构建并发布
+仓库已改为私有，站点改用 Cloudflare Workers 的 Static Assets 部署，配置文件为 `wrangler.jsonc`（`assets.directory` 指向 `./dist`）。
 
-### 独立登录（不影响本机其他 GitHub 账号）
+在 Cloudflare Dashboard 创建 Worker 并连接本仓库后，按以下内容填写：
 
-本项目的 `gh` 凭据保存在 `.gh-config/`，已加入 `.gitignore`：
+| 字段 | 填写内容 |
+| --- | --- |
+| Build command（构建命令） | `npm run build` |
+| Deploy command（部署命令） | `npm run deploy` |
+| Non-production branch deploy command（预览命令） | `npm run deploy:preview` |
 
-```bash
-cd openbanking.org.cn
-GH_CONFIG_DIR="$PWD/.gh-config" gh auth login --hostname github.com --git-protocol https --web
-GH_CONFIG_DIR="$PWD/.gh-config" gh auth status
-```
+对应的实际命令：
 
-仓库级 Git 身份已在 `.git/config` 中设置为 `hi-open-banking` / `hi-open-banking@users.noreply.github.com`。
+- 构建：`npm run build` → `astro build`
+- 部署：`npm run deploy` → `wrangler deploy`
+- 预览：`npm run deploy:preview` → `wrangler versions upload`
 
-仓库还配置了本地 credential helper，`git push` / `git fetch` 会自动使用 `.gh-config/` 中的 hi-open-banking 凭据，不会落到全局 Git 账号：
-
-```bash
-git config --local credential.helper
-```
-
-### 首次建仓
-
-```bash
-GH_CONFIG_DIR="$PWD/.gh-config" gh repo create hi-open-banking.github.io \
-  --public --source=. --remote=origin --push
-
-# 启用 Pages（GitHub Actions 作为构建源）
-GH_CONFIG_DIR="$PWD/.gh-config" gh api \
-  -X POST repos/hi-open-banking/hi-open-banking.github.io/pages \
-  -f build_type=workflow
-```
-
-工作流运行成功后，`main` 分支的每次推送都会更新站点。
+Cloudflare 会自动安装依赖（`npm ci`）并提供 `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`，无需手动配置。Worker 名称固定在 `wrangler.jsonc` 的 `name` 字段：`openbanking-org-cn`。
 
 ### 自定义域名
 
-在 `public/CNAME` 写入 `openbanking.org.cn` 并配置 DNS 后，Pages 会使用该域名；同时可在工作流中设置 `SITE_URL=https://openbanking.org.cn` 以保持 canonical 与 sitemap 一致。
+在 Cloudflare 的 Worker → Settings → Domains & Routes 添加 `openbanking.org.cn`（域名需已托管在 Cloudflare）。`astro.config.mjs` 的 `site` 默认就是该域名，canonical 与 sitemap 无需额外设置。
+
+### 本地预览
+
+```bash
+npm run build
+npx wrangler dev
+```
+
+### 说明
+
+原先的 GitHub Pages workflow（`.github/workflows/deploy.yml`）已移除：私有仓库在免费计划下无法使用 GitHub Pages，且部署目标已切换为 Cloudflare Workers。
 
 ## 内容约定
 

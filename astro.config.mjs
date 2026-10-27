@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-// 主站域名；GitHub Pages 构建时可通过 SITE_URL 覆盖
+// 主站域名；需要时可通过 SITE_URL 覆盖
 const SITE_URL = (process.env.SITE_URL || 'https://openbanking.org.cn').replace(/\/$/, '');
 
 export default defineConfig({
