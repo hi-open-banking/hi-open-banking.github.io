@@ -1,39 +1,48 @@
 ---
 // 全站顶部公告：覆盖 Starlight Banner，始终显示，可关闭并记住状态。
 // 文案跟随当前站点语言。
+// 第二行是常驻的独立/非官方声明，不随“关闭”按钮隐藏。
 const lang = Astro.locals.starlightRoute?.lang ?? 'en';
 const isZh = lang.startsWith('zh');
 const t = isZh
   ? {
       badge: '建设中',
       text: '本站正在持续完善，沙箱环境即将上线。',
+      notice: '本站为独立、非官方的个人技术学习项目，不代表任何银行、金融机构或监管机构。',
       close: '关闭公告',
     }
   : {
       badge: 'IN PROGRESS',
       text: 'This site is under active development. The sandbox is coming soon.',
+      notice:
+        'This is an independent, unofficial personal learning project. It does not represent any bank, financial institution, or regulator.',
       close: 'Dismiss announcement',
     };
 ---
 <div class="ob-announcement" id="ob-announcement" data-pagefind-ignore>
   <div class="ob-announcement__container">
     <div class="ob-announcement__inner" role="status">
-      <span class="ob-announcement__badge">
-        <span class="ob-announcement__dot" aria-hidden="true"></span>
-        {t.badge}
-      </span>
-      <p class="ob-announcement__text">{t.text}</p>
-      <button
-        type="button"
-        class="ob-announcement__close"
-        data-announcement-close
-        aria-label={t.close}
-        title={t.close}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
-        </svg>
-      </button>
+      <div class="ob-announcement__dev">
+        <span class="ob-announcement__badge">
+          <span class="ob-announcement__dot" aria-hidden="true"></span>
+          {t.badge}
+        </span>
+        <p class="ob-announcement__text">{t.text}</p>
+        <button
+          type="button"
+          class="ob-announcement__close"
+          data-announcement-close
+          aria-label={t.close}
+          title={t.close}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <p class="ob-announcement__notice">
+        <span aria-hidden="true">📌</span> {t.notice}
+      </p>
     </div>
   </div>
 </div>
@@ -42,12 +51,14 @@ const t = isZh
   (() => {
     const el = document.getElementById('ob-announcement');
     if (!el) return;
-    const key = 'ob-announcement-dismissed-v1';
+    // 仅隐藏“建设中”一行；非官方声明常驻。
+    const key = 'ob-announcement-dev-dismissed-v1';
+    const dev = el.querySelector('.ob-announcement__dev');
     try {
-      if (localStorage.getItem(key) === '1') el.hidden = true;
+      if (localStorage.getItem(key) === '1') dev?.setAttribute('hidden', '');
     } catch {}
     el.querySelector('[data-announcement-close]')?.addEventListener('click', () => {
-      el.hidden = true;
+      dev?.setAttribute('hidden', '');
       try {
         localStorage.setItem(key, '1');
       } catch {}
@@ -71,8 +82,8 @@ const t = isZh
 
   .ob-announcement__inner {
     display: flex;
-    align-items: center;
-    gap: 0.65rem;
+    flex-direction: column;
+    gap: 0.35rem;
     padding: 0.6rem 0.75rem;
     border: 1px solid var(--ob-border, #e5e7eb);
     border-radius: var(--ob-radius, 6px);
@@ -80,6 +91,16 @@ const t = isZh
     color: var(--ob-text, #1a1a1a);
     font-size: 14px;
     line-height: 1.5;
+  }
+
+  .ob-announcement__dev {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .ob-announcement__dev[hidden] {
+    display: none;
   }
 
   .ob-announcement__badge {
@@ -105,6 +126,11 @@ const t = isZh
     min-width: 0;
   }
 
+  .ob-announcement__notice {
+    margin: 0;
+    font-weight: 500;
+  }
+
   .ob-announcement__close {
     display: inline-flex;
     align-items: center;
@@ -127,7 +153,7 @@ const t = isZh
   }
 
   @media (max-width: 30rem) {
-    .ob-announcement__inner {
+    .ob-announcement__dev {
       align-items: flex-start;
     }
 

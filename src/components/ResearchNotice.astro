@@ -1,0 +1,25 @@
+---
+// 正文前的“非官方”提示框：用于 API 参考、认证与授权、规范说明等高风险页面。
+// 复用 Starlight aside 的结构与样式（配色见 styles/content.css 中的 caution 覆盖）。
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const isZh = lang.startsWith('zh');
+const t = isZh
+  ? {
+      title: '⚠️ 请注意',
+      text: '本文档为个人研究总结，并非任何官方标准。生产环境请以相关银行或监管机构正式规范为准。',
+    }
+  : {
+      title: '⚠️ Please note',
+      text: 'This document is a personal research summary, not an official standard. For production use, refer to the official specifications published by the relevant bank or regulator.',
+    };
+---
+<aside class="starlight-aside starlight-aside--caution">
+  <p class="starlight-aside__title">{t.title}</p>
+  <div class="starlight-aside__content">
+    <p>{t.text}</p>
+  </div>
+</aside>

@@ -11,7 +11,7 @@ export default defineConfig({
     starlight({
       title: 'OPEN-BANKING-LABS',
       description:
-        'Open Banking developer documentation: authentication, account information, payment initiation, and API reference.',
+        'Unofficial personal learning project documenting Open Banking: authentication, account information, payment initiation, and API reference.',
       // 站点图标与顶栏品牌标识
       favicon: '/favicon.svg',
       logo: {
@@ -29,6 +29,8 @@ export default defineConfig({
       components: {
         Head: './src/components/Head.astro',
         Banner: './src/components/Banner.astro',
+        Footer: './src/components/Footer.astro',
+        MarkdownContent: './src/components/MarkdownContent.astro',
         ThemeProvider: './src/components/ThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
       },
@@ -133,12 +135,12 @@ export default defineConfig({
           ],
         },
         {
-          label: 'About',
-          translations: { 'zh-CN': '关于' },
+          label: 'About & disclaimer',
+          translations: { 'zh-CN': '关于与免责声明' },
           items: [
             {
-              label: 'About this site',
-              translations: { 'zh-CN': '关于本站' },
+              label: 'About / disclaimer',
+              translations: { 'zh-CN': '关于 / 免责声明' },
               slug: 'about',
             },
           ],

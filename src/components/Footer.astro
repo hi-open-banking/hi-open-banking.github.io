@@ -1,0 +1,114 @@
+---
+// 覆盖 Starlight 默认 Footer：保留编辑链接、更新时间、上一页/下一页，
+// 并在所有页面底部统一追加“非官方声明 + 版权行”。
+import EditLink from 'virtual:starlight/components/EditLink';
+import LastUpdated from 'virtual:starlight/components/LastUpdated';
+import Pagination from 'virtual:starlight/components/Pagination';
+import config from 'virtual:starlight/user-config';
+
+const lang = Astro.locals.starlightRoute?.lang ?? 'en';
+const isZh = lang.startsWith('zh');
+
+const aboutHref = isZh ? '/zh-cn/about/' : '/about/';
+const t = isZh
+  ? {
+      disclaimer:
+        '本站为独立非官方个人项目，与任何银行、金融机构、监管机构或组织无隶属、授权或合作关系。内容仅供学习交流，不构成专业建议。',
+      copyright: '© 2026 OPEN-BANKING-LABS · 独立非官方项目',
+      about: '关于 / 免责声明',
+    }
+  : {
+      disclaimer:
+        'This site is an independent, unofficial personal project. It is not affiliated with, authorized by, or partnered with any bank, financial institution, regulator, or organization. Content is for learning and discussion only and does not constitute professional advice.',
+      copyright: '© 2026 OPEN-BANKING-LABS · Independent unofficial project',
+      about: 'About / disclaimer',
+    };
+---
+<footer class="sl-flex">
+  <div class="meta sl-flex">
+    <EditLink />
+    <LastUpdated />
+  </div>
+  <Pagination />
+
+  {
+    config.credits && (
+      <a class="kudos sl-flex" href="https://starlight.astro.build">
+        {Astro.locals.t('builtWithStarlight.label')}
+      </a>
+    )
+  }
+
+  <div class="ob-footer-legal">
+    <p class="ob-footer-legal__disclaimer">{t.disclaimer}</p>
+    <p class="ob-footer-legal__copyright">
+      <span>{t.copyright}</span>
+      <span aria-hidden="true">·</span>
+      <a href={aboutHref}>{t.about}</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .meta {
+    gap: 0.75rem 3rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+
+  .meta > :global(p:only-child) {
+    margin-inline-start: auto;
+  }
+
+  .kudos {
+    align-items: center;
+    gap: 0.5em;
+    margin: 1.5rem auto 0;
+    font-size: var(--sl-text-xs);
+    text-decoration: none;
+    color: var(--sl-color-gray-3);
+  }
+
+  .kudos:hover {
+    color: var(--sl-color-white);
+  }
+
+  .ob-footer-legal {
+    width: 100%;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--ob-border, #e5e7eb);
+    color: var(--sl-color-gray-3, #6b7280);
+    font-size: var(--sl-text-xs, 0.8125rem);
+    line-height: 1.6;
+  }
+
+  .ob-footer-legal__disclaimer {
+    margin: 0;
+  }
+
+  .ob-footer-legal__copyright {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0;
+  }
+
+  .ob-footer-legal__copyright a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .ob-footer-legal__copyright a:hover,
+  .ob-footer-legal__copyright a:focus-visible {
+    color: var(--ob-accent, #0055cc);
+  }
+</style>

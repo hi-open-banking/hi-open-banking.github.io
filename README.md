@@ -25,7 +25,8 @@ npm run check        # Astro / TypeScript 类型检查
 ```
 src/
   assets/            品牌图片（头像 avatar.svg、顶栏标识 logo-mark.svg）
-  components/        组件覆盖（固定浅色主题、隐藏主题切换器、Head 元数据）
+  components/        组件覆盖（Banner 公告、Footer 声明、MarkdownContent 提示框、Head 元数据、固定浅色主题）
+  config/            站点配置（research-notice.ts：需要“非官方”提示的页面前缀）
   content.config.ts  docs 与 i18n 内容集合
   content/docs/      英文文档（默认语言，Markdown / MDX）
     getting-started/ Getting started
@@ -124,3 +125,5 @@ npx wrangler dev
 - 每页 frontmatter 至少包含 `title` 与 `description`。
 - 提示框使用 Starlight 的 `:::note`、`:::tip`、`:::caution` 语法。
 - 代码块使用带语言标记的围栏，例如 bash、json。
+- API 参考、认证与授权、规范说明等页面的“非官方”提示框由 `MarkdownContent` 组件统一注入，页面清单维护在 `src/config/research-notice.ts`，不要在 Markdown 里重复书写。
+- 全站页脚的免责声明与版权行在 `src/components/Footer.astro` 中维护；顶部常驻声明在 `src/components/Banner.astro` 中维护。

@@ -1,7 +1,7 @@
 {
   "name": "OPEN-BANKING-LABS",
   "short_name": "OpenBanking",
-  "description": "Open Banking developer documentation: authentication, account information, payment initiation, and API reference.",
+  "description": "Unofficial personal learning project: Open Banking notes on authentication, account information, payment initiation, and API reference.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "/",

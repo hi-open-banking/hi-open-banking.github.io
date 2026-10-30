@@ -1,0 +1,16 @@
+---
+// 覆盖 Starlight 默认 MarkdownContent：
+// 在 API 参考、认证与授权、规范说明等页面正文前自动插入“非官方”提示框，
+// 页面清单集中维护在 src/config/research-notice.ts，避免在各 Markdown 里重复。
+import '@astrojs/starlight/style/markdown.css';
+
+import ResearchNotice from './ResearchNotice.astro';
+import { needsResearchNotice } from '../config/research-notice';
+
+const { entry, lang } = Astro.locals.starlightRoute;
+const showNotice = needsResearchNotice(entry.id);
+---
+<div class="sl-markdown-content">
+  {showNotice && <ResearchNotice lang={lang} />}
+  <slot />
+</div>

@@ -15,7 +15,12 @@ const getMeta = (key: string) => {
 };
 
 const pageTitle = getMeta('og:title') ?? entry.data.title;
-const pageDescription = getMeta('description') ?? entry.data.description ?? '';
+// 所有页面的描述统一追加“非官方 / 个人项目”说明，避免被误认为官方文档。
+const descriptionSuffix = isZh
+  ? '　本站为非官方个人技术学习项目，与任何银行、金融机构或监管机构无隶属或合作关系。'
+  : ' Unofficial personal learning project, not affiliated with any bank, financial institution, or regulator.';
+const pageDescription = `${getMeta('description') ?? entry.data.description ?? ''}${descriptionSuffix}`;
+const siteName = 'OPEN-BANKING-LABS (Personal Project)';
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isHome = pathname === '/' || pathname === '/zh-cn';
 
@@ -28,18 +33,31 @@ const shareImageWidth = isZh ? 1080 : 1280;
 const shareImageHeight = 640;
 
 // 移除默认值，改用更适合分享卡片的值（og:type、og:locale、twitter:card）。
+// 同时移除默认 description / og:description / og:site_name / author，
+// 由下方统一输出带“非官方”说明的版本。
 const defaultHead = head.filter(
   ({ tag, attrs }) =>
     !(
       tag === 'meta' &&
       (attrs?.property === 'og:type' ||
         attrs?.property === 'og:locale' ||
-        attrs?.name === 'twitter:card')
+        attrs?.property === 'og:description' ||
+        attrs?.property === 'og:site_name' ||
+        attrs?.name === 'description' ||
+        attrs?.name === 'author' ||
+        attrs?.name === 'twitter:card' ||
+        attrs?.name === 'twitter:description')
     )
 );
 ---
 
 {defaultHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+
+<!-- 站点性质：非官方个人项目（不使用真实姓名 / 单位信息） -->
+<meta name="description" content={pageDescription} />
+<meta name="author" content="OPEN-BANKING-LABS" />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:description" content={pageDescription} />
 
 <!-- 站点图标 -->
 <link rel="icon" href="/favicon.ico" sizes="any" />
